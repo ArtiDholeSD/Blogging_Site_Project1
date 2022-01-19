@@ -32,7 +32,7 @@ const login= async function (req, res) {
    
     
     if (author){
-        let token=await jwt.sign({_id:author._id},"radium")
+        let token= await jwt.sign({_id:author._id},"radium")
         res.setHeader("x-api-key",token) 
         res.send({status:true,msg:"user logged in successfully"})
          
