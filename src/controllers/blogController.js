@@ -6,7 +6,7 @@ const createBlog = async function (req, res) {
     try {
         if (req.body.authorId == req.validToken._id) {
             let savedData = await blogModel.create(req.body)
-            res.status(200).send({ status: true, data: savedData })
+            res.status(201).send({ status: true, data: savedData })
         } else (
             res.status(404).send({ status: false, msg: "provide your authorId" })
         )
@@ -59,7 +59,7 @@ const getThisBlog = async function (req, res) {
 
     catch (err) {
         console.log(err)
-        res.status(500).send(err.message)
+        res.status(500).send({ status: false, msg: "Something went wrong" });
 
     }
 }
@@ -87,10 +87,10 @@ const updateDetails = async function (req, res) {
 
         let updatedBlog = await blogModel.find({ _id: req.params.blogId, isDeleted: false, authorId: id })
 
-        res.send({ data: updatedBlog })
+        res.status(202).send({ data: updatedBlog })
 
     } catch (err) {
-        res.status(500).send({ msg: err });
+        res.status(500).send({ status: false, msg: "Something went wrong" });
     }
 
 }
@@ -118,7 +118,7 @@ let deleteBlog = async function (req, res) {
     }
     catch (err) {
         console.log(err)
-        res.send(err)
+        res.status(500).send({ status: false, msg: "Something went wrong" });
     }
 }
 
